@@ -1,0 +1,23 @@
+spring:
+  profiles: peer3
+  application:
+    name: tcdp-cloud-eurka-peer
+  zipkin:
+    base-url: http://localhost:9411
+    boot:
+      admin:
+        client:
+          url: http://localhost:8084
+
+server:
+  port: 8768
+
+eureka:
+  instance:
+    hostname: peer3
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8767/eureka/

@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: tcdp-cloud-zuul
+  zipkin:
+    base-url: http://localhost:9411
+server:
+  port: 9000
+
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port} #指定实例id
+
+zuul:
+  routes:
+    api-a:
+      path: /api-provider/**
+      serviceId: tcdp-device-service
+      sensitiveHeaders:
+
+    api-b:
+      path: /device/**
+      serviceId: tcdp-device-feign
+      strip-prefix: false
+      sensitiveHeaders:
+
+
+  ignored-services: '*' #忽略所有未配置的service
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"

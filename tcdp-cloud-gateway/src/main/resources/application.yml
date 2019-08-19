@@ -1,0 +1,65 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: tcdp-cloud-gateway
+  cloud:
+    gateway:
+      # 设置与服务注册发现组件结合，这样可以采用服务名的路由策略
+      discovery:
+        locator:
+          enabled: false #表明gateway开启服务注册和发现的功能
+#          lower-case-service-id: true #将请求路径上的服务名配置为小写
+      routes:
+        - id: tcdp-device-service
+          uri: lb://tcdp-device-service
+#          order: 0
+          predicates:
+            - Path=/demo/**
+          filter:
+            - StripPrefix=1
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#服务名
+#spring:
+#  application:
+#    name: tcdp-cloud-gateway
+#  cloud:
+#    gateway:
+#      # 设置与服务注册发现组件结合，这样可以采用服务名的路由策略
+#      discovery:
+#        locator:
+#          enabled: true #表明gateway开启服务注册和发现的功能
+#          lower-case-service-id: true #将请求路径上的服务名配置为小写
+#      routes:
+#        - id: path_route
+#          uri: http://localhost:8764
+#          order: 0
+#          predicates:
+#            - Path=/device/**
+#
+#        - id: path_route1
+#          uri: http://localhost:8763
+#          order: 1
+#          predicates:
+#            - Path=/api/device/**
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port} #指定实例id

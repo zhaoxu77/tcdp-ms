@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: tcdp-cloud-admin
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+  zipkin:
+    base-url: http://localhost:9411
+
+server:
+  port: 8084
+
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+#spring:
+#  application:
+#    name: tcdp-cloud-admin
+#  security:
+#    user:
+#      name: "admin"
+#      password: "admin"
+#server:
+#  port: 8099
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    metadata-map:
+#      user.name: ${spring.security.user.name}
+#      user.password: ${spring.security.user.password}
+
+#spring.mail.host: smtp.163.com
+#spring.mail.username: miles02
+#spring.mail.password:
+#spring.boot.admin.notify.mail.to: 124746406@qq.com
+
