@@ -41,6 +41,21 @@
         <zipkin.version>2.12.9</zipkin.version>
     </properties>
 
+    <modules>
+        <module>tcdp-cloud-eureka</module>
+        <module>tcdp-cloud-admin</module>
+        <module>tcdp-cloud-gateway</module>
+        <module>tcdp-cloud-zipkin</module>
+        <module>tcdp-cloud-zuul</module>
+        <module>tcdp-cloud-security-oauth2-server</module>
+        <module>tcdp-cloud-security-oauth2-resource</module>
+        <module>tcdp-common</module>
+        <module>tcdp-utils</module>
+        <module>tcdp-model</module>
+        <module>tcdp-service-api</module>
+        <module>tcdp-device-service</module>
+        <module>tcdp-device-feign</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -178,18 +193,18 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
-            <!-- &lt;!&ndash; 资源文件拷贝插件 &ndash;&gt;
-             <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-resources-plugin</artifactId>
-                 <configuration>
-                     <encoding>UTF-8</encoding>
-                 </configuration>
-             </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <!-- java编译插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
